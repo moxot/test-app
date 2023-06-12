@@ -25,11 +25,6 @@ jobs:
     needs: [build_test]
     env:
       AWS_INSTANCE_SG_ID: ${{ secrets.AWS_SECURITY_GROUP }}
-      PG_DATABASE: ${{ secrets.PG_DATABASE }}
-      PG_HOST: ${{ secrets.PG_HOST }}
-      PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
-      PG_PORT: ${{ secrets.PG_PORT }}
-      PG_USER: ${{ secrets.PG_USER }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -68,6 +63,12 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
+          envs:
+            PG_DATABASE: ${{ secrets.PG_DATABASE }}
+            PG_HOST: ${{ secrets.PG_HOST }}
+            PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+            PG_PORT: ${{ secrets.PG_PORT }}
+            PG_USER: ${{ secrets.PG_USER }}
           script: |
             docker pull tailier/test:latest
             docker stop container-name
