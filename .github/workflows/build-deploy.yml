@@ -77,7 +77,12 @@ jobs:
             echo "Removing existing Docker container..."
             docker rm container-name && echo "Docker container removed successfully." || echo "No container to remove."
             echo "Starting new Docker container..."
-            docker run --name container-name -d -p 3001:3001 tailier/test:latest && echo "Docker container started successfully."
+            docker run --name container-name -d -p 3001:3001 tailier/test:latest \
+            -e PG_DATABASE=$PG_DATABASE \
+            -e PG_HOST=$PG_HOST \
+            -e PG_PASSWORD=$PG_PASSWORD \
+            -e PG_PORT=$PG_PORT \
+            -e PG_USER=$PG_PORT && echo "Docker container started successfully."
       - name: revoke runner ip address
         run: |
           aws ec2 revoke-security-group-ingress \
