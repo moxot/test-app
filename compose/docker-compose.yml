@@ -1,0 +1,29 @@
+version: '3.2'
+
+services:
+  burrito-api:
+    build:
+      dockerfile: Dockerfile
+      context: ../
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    volumes:
+      - /usr/src/app/node_modules
+      - ../:/usr/src/app
+    depends_on:
+      - burrito-api-db
+    ports:
+      - '3001:3001'
+    restart: always
+
+  burrito-api-db:
+    image: 'postgres:latest'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=test_burrito
+    ports:
+      - '6001:5432'
+    restart: always
