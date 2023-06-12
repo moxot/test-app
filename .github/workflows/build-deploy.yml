@@ -23,6 +23,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: [build_test]
+    env:
+      AWS_INSTANCE_SG_ID: ${{ secrets.AWS_SECURITY_GROUP }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -38,6 +40,23 @@ jobs:
           docker build . -t tailier/test:latest
           docker push tailier/test:latest
 
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_ACCESS_SECRET }}
+          aws-region: us-east-1b
+      - name: get runner ip address
+        id: ip
+        uses: haythem/public-ip@v1.2
+      - name: whitelist runner ip address
+        run: |
+          aws ec2 authorize-security-group-ingress \
+            --group-id $AWS_INSTANCE_SG_ID \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
@@ -45,6 +64,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            docker login
             echo "Pulling Docker image..."
             docker pull tailier/test:latest && echo "Docker image pulled successfully."
             echo "Stopping existing Docker container..."
@@ -53,3 +73,10 @@ jobs:
             docker rm container-name && echo "Docker container removed successfully." || echo "No container to remove."
             echo "Starting new Docker container..."
             docker run --name container-name -d -p 3001:3001 tailier/test:latest && echo "Docker container started successfully."
+      - name: revoke runner ip address
+        run: |
+          aws ec2 revoke-security-group-ingress \
+            --group-id $AWS_INSTANCE_SG_ID \
+            --protocol tcp \
+            --port 22 \
+            --cidr ${{ steps.ip.outputs.ipv4 }}/32
