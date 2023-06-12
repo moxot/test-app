@@ -1,15 +1,6 @@
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderItemEntity } from './order-item.entity';
 
-class ColumnNumericTransformer {
-  to(data: number): number {
-    return data;
-  }
-  from(data: string): number {
-    return parseInt(data);
-  }
-}
-
 @Entity()
 export class MenuItemOptionEntity {
   @PrimaryGeneratedColumn()

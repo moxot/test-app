@@ -1,8 +1,17 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { MenuItemsService } from './menu-items.service';
 import { MenuItemEntity } from '../entities/menu-item.entity';
+import { ApiHeader, ApiTags } from '@nestjs/swagger';
+import { ApiKeyAuthGuard } from '../guards/api-key-guard';
 
+@UseGuards(ApiKeyAuthGuard)
+@ApiTags('Menu Items Controller')
 @Controller('menu-items')
+@ApiHeader({
+  name: 'x-api-key',
+  description: 'api key header',
+  required: true,
+})
 export class MenuItemsController {
   constructor(private readonly menuItemsService: MenuItemsService) {}
 
