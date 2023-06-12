@@ -81,7 +81,7 @@ jobs:
             -e PG_HOST=$PG_HOST \
             -e PG_PASSWORD=$PG_PASSWORD \
             -e PG_PORT=$PG_PORT \
-            -e PG_USER=PG_USER \
+            -e PG_USER=$PG_USER \
             && echo "Docker container started successfully."
       - name: revoke runner ip address
         run: |
