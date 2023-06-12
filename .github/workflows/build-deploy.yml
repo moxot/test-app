@@ -69,7 +69,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker login
             echo "Pulling Docker image..."
             docker pull tailier/test:latest && echo "Docker image pulled successfully."
             echo "Stopping existing Docker container..."
@@ -82,7 +81,8 @@ jobs:
             -e PG_HOST=$PG_HOST \
             -e PG_PASSWORD=$PG_PASSWORD \
             -e PG_PORT=$PG_PORT \
-            -e PG_USER=$PG_PORT && echo "Docker container started successfully."
+            -e PG_USER=PG_USER \
+            && echo "Docker container started successfully."
       - name: revoke runner ip address
         run: |
           aws ec2 revoke-security-group-ingress \
