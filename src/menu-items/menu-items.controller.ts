@@ -21,13 +21,13 @@ export class MenuItemsController {
     return this.menuItemsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): Promise<MenuItemEntity | null> {
-    return this.menuItemsService.findOne(+id);
-  }
-
   @Get('/options')
   findAllOptions(): Promise<MenuItemOptionEntity[]> {
     return this.menuItemsService.findAllOptions();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<MenuItemEntity | null> {
+    return this.menuItemsService.findOne(+id);
   }
 }
