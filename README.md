@@ -5,6 +5,8 @@ This is the test burrito API. Implemented with Nestjs, Typeorm, Postgresql, Dock
 - Building and pushing the Docker image to Docker Hub
 - SSH into the EC2 instance, pulling of the Docker image, and running the image
 
+I wasn't previously familiar with GitHub Actions, so I had to figure it out on the fly.
+
 ## Prerequisite
 For local development, ensure Docker and docker-compose are installed on your machine.
 ## Installation
