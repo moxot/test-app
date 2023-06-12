@@ -35,7 +35,7 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t tailier/test:latest
+          docker build . -t tailier/test:latest
           docker push tailier/test:latest
 
       - name: Deploy to EC2
