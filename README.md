@@ -21,7 +21,7 @@ cp .env.example .env
 ```
 Then, you can run the app in the development mode as follows:
 ```bash
-docker-compose -f compose/docker-compose.yml down --volumes && docker-compose -f compose/docker-compose.yml up --build --remove-orphans
+docker-compose -f compose/docker-compose.yml up --build --remove-orphans
 ```
 
 ## Api test
