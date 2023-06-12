@@ -73,11 +73,11 @@ jobs:
             docker stop container-name
             docker rm container-name
             rm /home/ubuntu/.env
-            echo $PG_DATABASE > /home/ubuntu/.env
-            echo $PG_HOST >> /home/ubuntu/.env
-            echo $PG_PASSWORD >> /home/ubuntu/.env
-            echo $PG_PORT >> /home/ubuntu/.env
-            echo PG_USER >> /home/ubuntu/.env
+            echo "PG_DATABASE=$PG_DATABASE" > /home/ubuntu/.env
+            echo "PG_HOST=$PG_HOST" >> /home/ubuntu/.env
+            echo "PG_PASSWORD=$PG_PASSWORD" >> /home/ubuntu/.env
+            echo "PG_PORT=$PG_PORT" >> /home/ubuntu/.env
+            echo "PG_USER=$PG_USER" >> /home/ubuntu/.env
             docker run --env-file /home/ubuntu/.env --name container-name -d -p 3001:3001 tailier/test:latest
       - name: revoke runner ip address
         run: |
