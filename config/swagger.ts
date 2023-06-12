@@ -2,7 +2,10 @@ import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 export default (app: INestApplication, version: string, port: number): void => {
-  const servers: string[] = [`http://localhost:${port}/api`];
+  const servers: string[] = [
+    `http://localhost:${port}/api`,
+    `http://ec2-44-204-16-117.compute-1.amazonaws.com:${port}/api`,
+  ];
   const swaggerConfig = new DocumentBuilder()
     .setTitle('burrito-api')
     .setDescription('burrito ordering api')

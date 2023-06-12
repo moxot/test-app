@@ -69,14 +69,16 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            echo "Pulling Docker image..."
-            docker pull tailier/test:latest && echo "Docker image pulled successfully."
-            echo "Stopping existing Docker container..."
-            docker stop container-name && echo "Docker container stopped successfully." || echo "No running container to stop."
-            echo "Removing existing Docker container..."
-            docker rm container-name && echo "Docker container removed successfully." || echo "No container to remove."
-            echo "Starting new Docker container..."
-            docker run -e PG_DATABASE="$PG_DATABASE" -e PG_HOST="$PG_HOST" -e PG_PASSWORD="$PG_PASSWORD" -e PG_PORT="$PG_PORT" -e PG_USER="$PG_USER" --name container-name -d -p 3001:3001 tailier/test:latest
+            docker pull tailier/test:latest
+            docker stop container-name
+            docker rm container-name
+            rm /home/ubuntu/.env
+            echo $PG_DATABASE > /home/ubuntu/.env
+            echo $PG_HOST >> /home/ubuntu/.env
+            echo $PG_PASSWORD >> /home/ubuntu/.env
+            echo $PG_PORT >> /home/ubuntu/.env
+            echo PG_USER >> /home/ubuntu/.env
+            docker run --env-file /home/ubuntu/.env --name container-name -d -p 3001:3001 tailier/test:latest
       - name: revoke runner ip address
         run: |
           aws ec2 revoke-security-group-ingress \
