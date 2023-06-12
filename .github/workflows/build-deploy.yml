@@ -35,8 +35,8 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t tailier/test:tagname:latest
-          docker push tailier/test:tagname:latest
+          docker build -t tailier/test:latest
+          docker push tailier/test:latest
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
@@ -45,7 +45,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            docker pull tailier/test:tagname:latest
+            docker pull tailier/test:latest
             docker stop container-name || true
             docker rm container-name || true
-            docker run --name container-name -d -p 80:80 tailier/test:tagname:latest
+            docker run --name container-name -d -p 80:80 tailier/test:latest
