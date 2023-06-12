@@ -1,6 +1,9 @@
 ## Description
 
-This is the test burrito API.
+This is the test burrito API. Implemented with Nestjs, Typeorm, Postgresql, Docker. The project is hosted on AWS EC2 with RDS and implements CI/CD via GitHub Actions in several steps:
+- Execution of tests (placeholders are used in this test app)
+- Building and pushing the Docker image to Docker Hub
+- SSH into the EC2 instance, pulling of the Docker image, and running the image
 
 ## Prerequisite
 For local development, ensure Docker and docker-compose are installed on your machine.

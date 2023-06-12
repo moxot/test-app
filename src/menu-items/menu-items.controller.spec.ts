@@ -3,6 +3,7 @@ import { MenuItemsController } from './menu-items.controller';
 import { MenuItemsService } from './menu-items.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { MenuItemEntity } from '../entities/menu-item.entity';
+import { MenuItemOptionEntity } from '../entities/menu-item-option.entity';
 
 describe('MenuItemsController', () => {
   let controller: MenuItemsController;
@@ -17,6 +18,10 @@ describe('MenuItemsController', () => {
         MenuItemsService,
         {
           provide: getRepositoryToken(MenuItemEntity),
+          useValue: mockedRepo,
+        },
+        {
+          provide: getRepositoryToken(MenuItemOptionEntity),
           useValue: mockedRepo,
         },
       ],
