@@ -30,6 +30,7 @@ jobs:
       PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
       PG_PORT: ${{ secrets.PG_PORT }}
       PG_USER: ${{ secrets.PG_USER }}
+      API_KEY: ${{ secrets.API_KEY }}
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -68,7 +69,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          envs: PG_DATABASE,PG_HOST,PG_PASSWORD,PG_PORT,PG_USER
+          envs: PG_DATABASE,PG_HOST,PG_PASSWORD,PG_PORT,PG_USER,API_KEY
           script: |
             docker pull tailier/test:latest
             docker stop container-name
@@ -79,6 +80,7 @@ jobs:
             echo "PG_PASSWORD=$PG_PASSWORD" >> /home/ubuntu/.env
             echo "PG_PORT=$PG_PORT" >> /home/ubuntu/.env
             echo "PG_USER=$PG_USER" >> /home/ubuntu/.env
+            echo "API_KEY=$API_KEY" >> /home/ubuntu/.env
             docker run --env-file /home/ubuntu/.env --name container-name -d -p 3001:3001 tailier/test:latest
       - name: revoke runner ip address
         run: |

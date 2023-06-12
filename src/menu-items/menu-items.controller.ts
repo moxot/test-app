@@ -3,6 +3,7 @@ import { MenuItemsService } from './menu-items.service';
 import { MenuItemEntity } from '../entities/menu-item.entity';
 import { ApiHeader, ApiTags } from '@nestjs/swagger';
 import { ApiKeyAuthGuard } from '../guards/api-key-guard';
+import { MenuItemOptionEntity } from '../entities/menu-item-option.entity';
 
 @UseGuards(ApiKeyAuthGuard)
 @ApiTags('Menu Items Controller')
@@ -23,5 +24,10 @@ export class MenuItemsController {
   @Get(':id')
   findOne(@Param('id') id: string): Promise<MenuItemEntity | null> {
     return this.menuItemsService.findOne(+id);
+  }
+
+  @Get('/options')
+  findAllOptions(): Promise<MenuItemOptionEntity[]> {
+    return this.menuItemsService.findAllOptions();
   }
 }
