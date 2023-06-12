@@ -25,12 +25,12 @@ docker-compose -f compose/docker-compose.yml down --volumes && docker-compose -f
 ```
 
 ## Api test
-###Via Swagger:
+### Via Swagger:
 Locally if docker is running with .env.example variables app swagger ui should be accessible on [localhost:3001/api](https://localhost:3001/api) where api can be tested.
 
 Remote deployment should be accessible [here](http://ec2-44-204-16-117.compute-1.amazonaws.com:3001/api).
 
-###Via curl:
+### Via curl:
 POST for order creation (ids can be retrieved /api/menu-items/options and /api/menu-items):
 ```bash
 curl -X POST http://ec2-44-204-16-117.compute-1.amazonaws.com:3001/api/orders \
