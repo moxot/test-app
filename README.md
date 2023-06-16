@@ -32,6 +32,8 @@ Locally if docker is running with .env.example variables app swagger ui should b
 
 Remote deployment should be accessible [here](http://ec2-44-204-16-117.compute-1.amazonaws.com:3001/api).
 
+Api key: 545c146726002119c0106b5e
+
 ### Via curl:
 POST for order creation (ids can be retrieved /api/menu-items/options and /api/menu-items):
 ```bash
